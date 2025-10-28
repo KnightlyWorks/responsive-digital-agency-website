@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact page</title>
+    <link rel="stylesheet" href="/css/tailwind.css" />
+    <link href="/css/aos.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="flex h-fit w-full items-center justify-between px-8 py-6 md:pl-17.5">
+      <a href="./index.html" data-aos="fade-right" data-aos-duration="600">
+        <img src="assets/shared/icon-logo.svg" alt="Waves logo" />
+      </a>
+
+      <!--Mobile menu-->
+      <nav
+        class="flex md:hidden"
+        x-data="{isOpen : false}"
+        @click="isOpen = !isOpen"
+        data-aos="fade-left"
+        data-aos-duration="400"
+      >
+        <button :aria-expanded="isOpen" aria-controls="mobile-nav" class="size-12 text-black">
+          <img src="./assets/shared/burger-menu-svgrepo-com.svg" alt="" x-show="!isOpen" />
+          <img src="./assets/shared/close-svgrepo-com.svg" alt="" x-show="isOpen" />
+        </button>
+
+        <div
+          role="navigation"
+          x-show="isOpen"
+          id="mobile-nav"
+          class="fixed left-1/2 flex w-2/3 -translate-x-1/2 translate-y-2/5 flex-col items-center gap-8 bg-white px-15 py-10"
+        >
+          <a
+            x-init="$nextTick();"
+            x-bind:class="$store.navigation.isCurrent('index.html') && 'text-brand'"
+            href="./index.html#blog"
+          >
+            Home
+          </a>
+          <a
+            href="#about"
+            x-init="$nextTick();"
+            x-bind:class="$store.navigation.isCurrent('index.html#about') && 'text-brand'"
+          >
+            About Us
+          </a>
+          <a
+            href="./index.html#blog"
+            x-init="$nextTick();"
+            x-bind:class="$store.navigation.isCurrent('index.html#blog') && 'text-brand'"
+          >
+            Blog
+          </a>
+          <a
+            href="./services.html"
+            x-init="$nextTick();"
+            x-bind:class="$store.navigation.isCurrent('services.html') && 'text-brand'"
+          >
+            Services
+          </a>
+
+          <a
+            href="./contact.html"
+            class="text-18 bg-brand flex items-center gap-2 px-6 py-3 text-white"
+          >
+            <span>Contact Us</span>
+            <svg class="size-2.5">
+              <use href="#icon-arrow-right" />
+            </svg>
+          </a>
+        </div>
+      </nav>
+      <!--Mobile ends-->
+
+      <!--Desktop start-->
+      <nav
+        data-aos="fade-down"
+        data-aos-duration="400"
+        data-aos-delay="100"
+        class="[&>*]:hocus:text-brand [&>*]:text-18 hidden items-center justify-center gap-15 md:flex [&>*]:transition-colors"
+      >
+        <a
+          x-init="$nextTick();"
+          x-bind:class="$store.navigation.isCurrent('index.html') && 'text-brand'"
+          href="./index.html"
+        >
+          Home
+        </a>
+        <a
+          href="#about"
+          x-init="$nextTick();"
+          x-bind:class="$store.navigation.isCurrent('index.html#about') && 'text-brand'"
+        >
+          About Us
+        </a>
+        <a
+          href="./index.html#blog"
+          x-init="$nextTick();"
+          x-bind:class="$store.navigation.isCurrent('index.html#blog') && 'text-brand'"
+        >
+          Blog
+        </a>
+        <a
+          href="./services.html"
+          x-init="$nextTick();"
+          x-bind:class="$store.navigation.isCurrent('services.html') && 'text-brand'"
+        >
+          Services
+        </a>
+      </nav>
+
+      <a
+        data-aos="fade-left"
+        data-aos-duration="600"
+        data-aos-delay="200"
+        href="./contact.html"
+        class="text-18 hocus:animate-pulse bg-brand hidden items-center gap-2 px-6 py-3 text-white md:flex"
+      >
+        <span>Contact Us</span>
+        <svg class="size-2.5">
+          <use href="#icon-arrow-right" />
+        </svg>
+      </a>
+    </header>
+
+    <main class="space-y-20 py-20">
+      <header class="space-y-10 px-5 md:px-[11%]">
+        <h1 class="text-62 flex flex-col font-medium">
+          <span>Interested?</span>
+          <span>Let’s talk!</span>
+        </h1>
+        <p class="text-24 text-left text-balance">
+          Just fill this form and we will contact you promptly to discuss your project. Hate forms?
+          Drop us a message at
+          <strong data-aos="zoom-out" data-aos-duration="400" class="text-brand font-medium">
+            info@waves.com
+          </strong>
+          or
+          <strong
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-duration="6000"
+            class="text-brand font-medium"
+          >
+            hello@waves.com
+          </strong>
+        </p>
+      </header>
+
+      <form
+        name="contact"
+        data-netlify="true"
+        method="POST"
+        @submit.prevent="submitForm($event)"
+        x-data="form"
+        class="text-24 relative flex w-full flex-col items-start gap-8 px-5 text-black md:px-[11%]"
+      >
+        <!--Loading state-->
+        <div x-show="loading" class="absolute inset-0 z-10 h-full w-full backdrop-blur-xs">
+          <div
+            class="border-t-brand border-lighter-brand absolute top-1/2 left-1/2 z-20 size-30 -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full border-4 bg-none md:size-15"
+          ></div>
+        </div>
+
+        <!--Succes state-->
+        <div x-show="success" class="absolute inset-0 z-10 h-full w-full backdrop-blur-xs">
+          <article
+            x-transition
+            role="dialog"
+            class="animate-pulse-shadow absolute top-1/2 left-1/2 flex h-fit w-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 rounded-xs bg-white/90 px-20 py-20"
+          >
+            <h2 class="text-40 font-medium">
+              Thank you!
+              <span class="font-semibold" x-text="name"></span>
+            </h2>
+            <p class="text-32">You will receive a response soon to</p>
+            <strong x-text="email" class="text-brand text-40 max-w-[30ch] font-medium">
+              example@email.com
+            </strong>
+
+            <button
+              @click="success = false"
+              class="bg-brand/90 hocus:scale-102 hocus:shadow-xs text-24 px-6 py-4 font-medium text-white duration-200"
+              type="button"
+            >
+              Confirm
+            </button>
+          </article>
+        </div>
+
+        <input type="hidden" name="form-name" value="contact" />
+
+        <div class="horizontal-after relative w-full md:w-1/2 lg:w-2/5">
+          <label for="name" class="sr-only">Your Name</label>
+          <input
+            name="name"
+            x-model="name"
+            class="w-full"
+            type="text"
+            required
+            id="name"
+            placeholder="Your Name"
+            @blur="validateName(true)"
+            @input="nameError && validateName()"
+            :class="
+            {
+              'border-red border-2': nameError,
+              'border-green border-2': !nameError && name.length >= 3
+            }"
+          />
+          <p x-transition x-show="nameError" x-text="nameError"></p>
+        </div>
+
+        <div class="horizontal-after w-full md:w-1/2 lg:w-2/5">
+          <label for="email" class="sr-only">Your Email</label>
+          <input
+            name="email"
+            x-model="email"
+            class="w-full p-1"
+            type="text"
+            required
+            id="email"
+            placeholder="Your Email"
+            @blur="validateEmail()"
+            @input="emailError && validateEmail()"
+            :class="emailError ? 'border-red border-2' : (email.length > 0 && !emailError ? 'border-green border-2' : '')"
+          />
+          <p x-transition x-show="emailError" x-text="emailError"></p>
+        </div>
+        <div class="horizontal-after w-full md:w-1/2 lg:w-2/5">
+          <label for="about" class="sr-only">Tell Us About Your Project</label>
+          <textarea
+            name="message"
+            placeholder="Tell Us About Your Project"
+            x-model="about"
+            @blur="validateText()"
+            @input="aboutError && validateText()"
+            :class="aboutError ? 'border-red border-2' : (about.length >= 20 && !emailError ? 'border-green border-2' : '')"
+            class="w-full resize-y"
+            id="about"
+          ></textarea>
+          <p x-transition x-show="aboutError" x-text="aboutError"></p>
+        </div>
+        <div
+          class="horizontal-after flex w-full flex-row-reverse items-center-safe justify-end gap-4 md:w-1/2 lg:w-2/5"
+        >
+          <label for="policy" class="max-w-[35ch]">
+            I confirm that I have read the
+            <a class="border-b-2 font-medium" href="#">privacy policy</a>
+            .
+          </label>
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1920">
+              <path
+                fill-rule="evenodd"
+                d="M1827.701 303.065 698.835 1431.801 92.299 825.266 0 917.564 698.835 1616.4 1919.869 395.234z"
+              />
+            </svg>
+          </div>
+          <input
+            x-model="isPrivacy"
+            class="accent-brand size-5"
+            type="checkbox"
+            id="policy"
+            required
+          />
+        </div>
+        <button
+          x-bind:disabled="!validateForm()"
+          type="submit"
+          class="bg-brand mt-15 flex max-w-fit items-center gap-3 px-8 py-5 text-white disabled:opacity-75"
+        >
+          Send Request
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-2.5" fill="none">
+            <path
+              fill="currentColor"
+              d="M.833 4.17h6.325l-2.75-2.742A.837.837 0 1 1 5.592.245l4.166 4.167c.076.079.136.172.175.275a.833.833 0 0 1 0 .633.833.833 0 0 1-.175.275L5.592 9.762a.833.833 0 0 1-1.184 0 .833.833 0 0 1 0-1.184l2.75-2.741H.833a.833.833 0 1 1 0-1.667Z"
+            />
+          </svg>
+        </button>
+      </form>
+    </main>
+
+    <article
+      data-aos="zoom-in-up"
+      data-aos-duration="1000"
+      data-aos-easing="ease-out-back"
+      class="cta-background mt-20 flex w-full flex-col items-center gap-9.5 py-25 text-white lg:hidden"
+    >
+      <h3
+        class="text-48 md:text-62 font-medium"
+        data-aos="fade-down"
+        data-aos-delay="400"
+        data-aos-duration="800"
+      >
+        Ready for your project
+      </h3>
+      <a
+        class="text-24 bg-brand px-12 py-5"
+        href="#"
+        data-aos="zoom-in"
+        data-aos-delay="700"
+        data-aos-duration="600"
+      >
+        Get in touch
+      </a>
+    </article>
+
+    <footer
+      class="relative mt-70 flex min-h-100 w-full flex-col items-center bg-black pt-50 pb-20 text-white md:mt-100"
+    >
+      <!--CTA for desktop-->
+      <article
+        data-aos="zoom-in-up"
+        data-aos-duration="800"
+        data-aos-easing="ease-out-back"
+        class="cta-background absolute top-0 left-1/2 hidden w-2/3 -translate-x-1/2 -translate-y-2/3 flex-col items-center gap-9.5 md:px-56 md:py-25 lg:flex"
+      >
+        <h3
+          class="text-48 md:text-62 font-medium"
+          data-aos="fade-down"
+          data-aos-delay="400"
+          data-aos-duration="800"
+        >
+          Ready for your project
+        </h3>
+        <a
+          class="text-24 bg-brand px-12 py-5"
+          href="#"
+          data-aos="zoom-in"
+          data-aos-delay="700"
+          data-aos-duration="500"
+        >
+          Get in touch
+        </a>
+      </article>
+
+      <img
+        class="absolute top-1 -z-10 w-full -translate-y-full"
+        src="./assets/shared/lines-footer.svg"
+        alt=""
+        aria-hidden="true"
+      />
+
+      <div
+        class="mt-20 flex w-full max-w-2/3 flex-col items-start justify-between md:flex-row"
+        data-aos="fade-up"
+        data-aos-duration="800"
+      >
+        <img
+          class="order-10 mt-10 h-15 w-auto md:order-0 md:mt-0"
+          src="./assets/shared/icon-logo.svg"
+          alt="waves logo"
+        />
+        <div class="space-y-15">
+          <nav class="flex flex-col justify-end gap-15 md:flex-row">
+            <a class="hocus:text-brand transition-colors" href="./index.html">Home</a>
+            <a class="hocus:text-brand transition-colors" href="#about">About Us</a>
+            <a class="hocus:text-brand transition-colors" href="#blog">Blog</a>
+            <a class="hocus:text-brand transition-colors" href="./services.html">Services</a>
+          </nav>
+
+          <nav aria-label="social links" class="flex justify-end gap-6">
+            <a class="hocus:scale-105 transition-[scale]" href="#">
+              <img src="./assets/shared/facebook-icon.svg" alt="facebook icon" />
+            </a>
+            <a class="hocus:scale-105 transition-[scale]" href="#">
+              <img src="./assets/shared/twitter-icon.svg" alt="twitter icon" />
+            </a>
+            <a class="hocus:scale-105 transition-[scale]" href="#">
+              <img src="./assets/shared/instagram-icon.svg" alt="instagram icon" />
+            </a>
+            <a class="hocus:scale-105 transition-[scale]" href="#">
+              <img src="./assets/shared/in-icon.svg" alt="linkedin icon" />
+            </a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/js/bundle.js"></script>
+  </body>
+</html>

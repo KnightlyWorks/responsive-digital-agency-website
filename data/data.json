@@ -1,0 +1,18 @@
+{
+  "logos": [
+    { "path": "./assets/homepage/logos/logo-1.svg", "name": "logo-1.svg" },
+    { "path": "./assets/homepage/logos/logo-2.svg", "name": "logo-2.svg" },
+    { "path": "./assets/homepage/logos/logo-3.svg", "name": "logo-3.svg" },
+    { "path": "./assets/homepage/logos/logo-4.svg", "name": "logo-4.svg" },
+    { "path": "./assets/homepage/logos/logo-5.svg", "name": "logo-5.svg" },
+    { "path": "./assets/homepage/logos/logo-6.svg", "name": "logo-6.svg" },
+    { "path": "./assets/homepage/logos/logo-7.svg", "name": "logo-7.svg" },
+    { "path": "./assets/homepage/logos/logo-8.svg", "name": "logo-8.svg" },
+    { "path": "./assets/homepage/logos/logo-9.svg", "name": "logo-9.svg" },
+    { "path": "./assets/homepage/logos/logo-10.svg", "name": "logo-10.svg" },
+    { "path": "./assets/homepage/logos/logo-11.svg", "name": "logo-11.svg" },
+    { "path": "./assets/homepage/logos/logo-12.svg", "name": "logo-12.svg" },
+    { "path": "./assets/homepage/logos/logo-13.svg", "name": "logo-13.svg" },
+    { "path": "./assets/homepage/logos/logo-14.svg", "name": "logo-14.svg" }
+  ]
+}

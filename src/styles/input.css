@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+@import "tailwindcss";
+
+@variant hocus (&:hover, &:focus);
+
+@theme {
+  --color-black: #0f0f0f;
+  --color-grey: #cacaca;
+  --color-brand: #8447e9;
+  --color-lighter-brand: #bdb0ec;
+  --color-white: #f5f5f5;
+
+  --color-red: #e94747;
+  --color-green: #47e947;
+
+  --animate-right-to-left: moveRightToLeft 20s linear infinite;
+  --animate-left-to-right: moveLeftToRight 20s linear infinite;
+
+  --animate-pulse-shadow: pulse-ring 5s infinite;
+
+  @keyframes moveRightToLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes moveLeftToRight {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes pulse-ring {
+    0%,
+    100% {
+      box-shadow: 0 0 0 6px var(--color-brand);
+    }
+    50% {
+      box-shadow: 0 0 0 50px var(--color-lighter-brand);
+    }
+  }
+}
+
+@layer base {
+  body {
+    font-family: "Montserrat", sans-serif;
+    @apply mx-auto max-w-[2000px] text-black antialiased;
+  }
+}
+
+@layer components {
+  .cta-background {
+    @apply bg-[url('../../assets/shared/footer-image.png')] bg-cover bg-no-repeat;
+  }
+
+  .vertical-after {
+    @apply after:bg-brand relative after:absolute after:bottom-0 after:left-[calc(100%+15px)] after:h-0.5 after:w-0.5 after:content-[''];
+  }
+
+  /*service page*/
+  .service-card {
+    @apply flex flex-col gap-8.5 md:my-20 md:px-[11%] lg:flex-row;
+  }
+}
+
+@utility horizontal-before {
+  @apply before:bg-brand inline-flex items-center gap-3.5 before:inline-block before:h-0.75 before:w-4 before:content-[''];
+}
+
+@utility horizontal-after {
+  @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#D9D9D9] after:content-[''];
+}
+
+@utility text-62 {
+  @apply text-[62px] tracking-[-5.5%];
+}
+@utility text-48 {
+  @apply text-[48px] tracking-[-4%];
+}
+@utility text-40 {
+  @apply text-[40px] tracking-[0%];
+}
+@utility text-32 {
+  @apply text-[32px] tracking-[0%];
+}
+@utility text-24 {
+  @apply text-[24px] tracking-[0%];
+}
+@utility text-20 {
+  @apply text-[20px] tracking-[0%];
+}
+@utility text-18 {
+  @apply text-[18px] tracking-[-5%];
+}
+@utility text-12 {
+  @apply text-[12px] tracking-[0%];
+}
+
+@utility waves {
+  @apply bg-[url('../../assets/shared/lines.svg')] bg-clip-padding bg-bottom bg-repeat-x;
+}
+@utility waves-vertical {
+  @apply bg-[url('../../assets/shared/vertical-lines.svg')] bg-[length:auto_55%] bg-clip-padding bg-[right_40px_bottom_40px] bg-repeat-y;
+}
