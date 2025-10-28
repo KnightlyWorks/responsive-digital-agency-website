@@ -6,7 +6,6 @@ export const form = () => ({
   about: "",
   aboutError: null,
   isPrivacy: null,
-
   loading: false,
   success: false,
 
@@ -15,14 +14,11 @@ export const form = () => ({
       this.emailError = null;
       return false;
     }
-
     if (this.email.length < 3) {
       this.emailError = "Email too short";
       return false;
     }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (emailRegex.test(this.email)) {
       this.emailError = null;
       return true;
@@ -37,21 +33,18 @@ export const form = () => ({
       this.nameError = null;
       return false;
     }
-
     if (this.name.length < 3) {
       if (onBlur) {
         this.nameError = "Please provide a correct name";
       }
       return false;
     }
-
     this.nameError = null;
     return true;
   },
 
   validateText() {
-    if (this.about.length === 0) return;
-
+    if (this.about.length === 0) return false;
     if (this.about.length >= 20) {
       this.aboutError = null;
       return true;
@@ -69,9 +62,10 @@ export const form = () => ({
     if (!this.validateForm()) {
       return;
     }
-    this.loading = true;
 
+    this.loading = true;
     const formData = new FormData(e.target);
+    formData.append("form-name", "contact");
 
     try {
       const response = await fetch("/", {

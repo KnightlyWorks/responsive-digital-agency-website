@@ -151,12 +151,15 @@
 
       <form
         name="contact"
-        data-netlify="true"
+        netlify
+        netlify-honeypot="bot-field"
         method="POST"
         @submit.prevent="submitForm($event)"
         x-data="form"
         class="text-24 relative flex w-full flex-col items-start gap-8 px-5 text-black md:px-[11%]"
       >
+        <input type="hidden" name="form-name" value="contact" />
+        <input type="hidden" name="bot-field" />
         <!--Loading state-->
         <div x-show="loading" class="absolute inset-0 z-10 h-full w-full backdrop-blur-xs">
           <div
@@ -189,8 +192,6 @@
             </button>
           </article>
         </div>
-
-        <input type="hidden" name="form-name" value="contact" />
 
         <div class="horizontal-after relative w-full md:w-1/2 lg:w-2/5">
           <label for="name" class="sr-only">Your Name</label>
