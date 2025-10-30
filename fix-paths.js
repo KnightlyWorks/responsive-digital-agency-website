@@ -3,7 +3,6 @@ import { join } from 'path';
 
 console.log('🔧 Fixing HTML paths...\n');
 
-// Находим все HTML файлы в корне
 const htmlFiles = readdirSync('.').filter(file => file.endsWith('.html'));
 
 if (htmlFiles.length === 0) {
@@ -19,14 +18,12 @@ htmlFiles.forEach(file => {
     let content = readFileSync(file, 'utf-8');
     let changes = 0;
 
-    // Список замен (что → на что)
     const replacements = [
-        // CSS файлы
+
         { from: /href=["']\/dist\/css\//g, to: 'href="/css/', name: 'CSS paths' },
         { from: /href=["']dist\/css\//g, to: 'href="/css/', name: 'CSS paths (relative)' },
                   { from: /href=["']src\/styles\/tailwind\.css["']/g, to: 'href="/css/tailwind.css"', name: 'Old Tailwind path' },
 
-                  // JavaScript файлы
                   { from: /src=["']\/dist\/js\//g, to: 'src="/js/', name: 'JS paths' },
                   { from: /src=["']dist\/js\//g, to: 'src="/js/', name: 'JS paths (relative)' },
                   { from: /src=["']src\/js\/main\.js["']/g, to: 'src="/js/bundle.js"', name: 'Old main.js path' },
@@ -51,7 +48,7 @@ htmlFiles.forEach(file => {
                   { from: /data-src=["']dist\//g, to: 'data-src="/', name: 'data-src paths (relative)' },
     ];
 
-    // Применяем все замены
+
     replacements.forEach(({ from, to, name }) => {
         const beforeLength = content.length;
         content = content.replace(from, to);
@@ -63,7 +60,7 @@ htmlFiles.forEach(file => {
         }
     });
 
-    // Убеждаемся что <script> имеет type="module" для bundle.js
+
     if (content.includes('src="/js/bundle.js"') && !content.includes('type="module"')) {
         content = content.replace(
             /<script(\s+)src=["']\/js\/bundle\.js["']>/g,
@@ -73,7 +70,7 @@ htmlFiles.forEach(file => {
         console.log(`  ✓ Added: type="module" to bundle.js`);
     }
 
-    // Сохраняем файл если были изменения
+
     if (changes > 0) {
         writeFileSync(file, content, 'utf-8');
         console.log(`  📝 Saved: ${file} (${changes} changes)\n`);

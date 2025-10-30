@@ -3,7 +3,6 @@ import { join } from 'path';
 
 console.log('📋 Copying static files to dist/...\n');
 
-// Копируем HTML
 mkdirSync('dist', { recursive: true });
 const files = readdirSync('.');
 files.forEach(file => {
@@ -13,24 +12,22 @@ files.forEach(file => {
     }
 });
 
-// Копируем assets
 try {
     if (statSync('assets', { throwIfNoEntry: false })) {
         copyDir('assets', 'dist/assets');
         console.log('✅ assets/ → dist/assets/');
     }
 } catch (err) {
-    // Нет assets
+
 }
 
-// Копируем data (для JSON и других данных)
 try {
     if (statSync('data', { throwIfNoEntry: false })) {
         copyDir('data', 'dist/data');
         console.log('✅ data/ → dist/data/');
     }
 } catch (err) {
-    // Нет data
+
 }
 
 function copyDir(src, dest) {

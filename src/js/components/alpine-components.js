@@ -80,6 +80,9 @@ export const form = () => ({
         this.email = "";
         this.about = "";
         this.isPrivacy = false;
+        this.nameError = null;
+        this.emailError = null;
+        this.aboutError = null;
       }
     } catch (error) {
       console.log(error);

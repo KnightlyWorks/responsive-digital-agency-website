@@ -21,20 +21,42 @@
         data-aos="fade-left"
         data-aos-duration="400"
       >
-        <button :aria-expanded="isOpen" aria-controls="mobile-nav" class="size-12 text-black">
+        <button
+          :aria-expanded="isOpen"
+          aria-controls="mobile-nav"
+          class="z-20 size-12 rounded-full text-white"
+        >
           <img src="./assets/shared/burger-menu-svgrepo-com.svg" alt="" x-show="!isOpen" />
           <img src="./assets/shared/close-svgrepo-com.svg" alt="" x-show="isOpen" />
         </button>
 
         <div
+          x-show="isOpen"
+          @click="isOpen = false"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          class="from-brand/40 to-lighter-brand/40 fixed inset-0 z-10 bg-linear-180 backdrop-blur-sm"
+        ></div>
+
+        <div
           role="navigation"
           x-show="isOpen"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 scale-90"
+          x-transition:enter-end="opacity-100 scale-100"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100 scale-100"
+          x-transition:leave-end="opacity-0 scale-90"
           id="mobile-nav"
-          class="fixed left-1/2 flex w-2/3 -translate-x-1/2 translate-y-2/5 flex-col items-center gap-8 bg-white px-15 py-10"
+          class="fixed left-1/2 z-20 flex w-2/3 -translate-x-1/2 translate-y-2/5 flex-col items-center gap-8 bg-white px-15 py-10"
         >
           <a
             x-init="$nextTick();"
-            x-bind:class="$store.navigation.isCurrent('index.html') && 'text-brand'"
+            :class="{ 'text-brand': $store.navigation.isCurrent('index.html') }"
             href="./index.html#blog"
           >
             Home
@@ -42,21 +64,21 @@
           <a
             href="#about"
             x-init="$nextTick();"
-            x-bind:class="$store.navigation.isCurrent('index.html#about') && 'text-brand'"
+            :class="{ 'text-brand': $store.navigation.isCurrent('index.html#about') }"
           >
             About Us
           </a>
           <a
             href="./index.html#blog"
             x-init="$nextTick();"
-            x-bind:class="$store.navigation.isCurrent('index.html#blog') && 'text-brand'"
+            :class="{ 'text-brand': $store.navigation.isCurrent('index.html#blog') }"
           >
             Blog
           </a>
           <a
             href="./services.html"
             x-init="$nextTick();"
-            x-bind:class="$store.navigation.isCurrent('services.html') && 'text-brand'"
+            :class="{ 'text-brand': $store.navigation.isCurrent('services.html') }"
           >
             Services
           </a>
@@ -83,7 +105,7 @@
       >
         <a
           x-init="$nextTick();"
-          x-bind:class="$store.navigation.isCurrent('index.html') && 'text-brand'"
+          :class="{ 'text-brand': $store.navigation.isCurrent('index.html') }"
           href="./index.html"
         >
           Home
@@ -91,21 +113,21 @@
         <a
           href="#about"
           x-init="$nextTick();"
-          x-bind:class="$store.navigation.isCurrent('index.html#about') && 'text-brand'"
+          :class="{ 'text-brand': $store.navigation.isCurrent('index.html#about') }"
         >
           About Us
         </a>
         <a
           href="./index.html#blog"
           x-init="$nextTick();"
-          x-bind:class="$store.navigation.isCurrent('index.html#blog') && 'text-brand'"
+          :class="{ 'text-brand': $store.navigation.isCurrent('index.html#blog') }"
         >
           Blog
         </a>
         <a
           href="./services.html"
           x-init="$nextTick();"
-          x-bind:class="$store.navigation.isCurrent('services.html') && 'text-brand'"
+          :class="{ 'text-brand': $store.navigation.isCurrent('services.html') }"
         >
           Services
         </a>
@@ -172,16 +194,17 @@
           <article
             x-transition
             role="dialog"
-            class="animate-pulse-shadow absolute top-1/2 left-1/2 flex h-fit w-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 rounded-xs bg-white/90 px-20 py-20"
+            class="animate-pulse-shadow absolute top-1/2 left-1/2 flex h-fit w-10/12 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 rounded-xs bg-white/90 px-20 py-20 text-left text-balance md:w-1/2"
           >
             <h2 class="text-40 font-medium">
               Thank you!
               <span class="font-semibold" x-text="name"></span>
             </h2>
-            <p class="text-32">You will receive a response soon to</p>
-            <strong x-text="email" class="text-brand text-40 max-w-[30ch] font-medium">
-              example@email.com
-            </strong>
+            <p class="text-24 md:text-32">You will receive a response soon to</p>
+            <strong
+              class="text-brand text-32 md:text-40 max-w-[30ch] font-medium"
+              x-text="email"
+            ></strong>
 
             <button
               @click="success = false"
@@ -238,7 +261,7 @@
             x-model="about"
             @blur="validateText()"
             @input="aboutError && validateText()"
-            :class="aboutError ? 'border-red border-2' : (about.length >= 20 && !emailError ? 'border-green border-2' : '')"
+            :class="aboutError ? 'border-red border-2' : (about.length >= 20 && !aboutError ? 'border-green border-2' : '')"
             class="w-full resize-y"
             id="about"
           ></textarea>
@@ -274,12 +297,6 @@
           class="bg-brand mt-15 flex max-w-fit items-center gap-3 px-8 py-5 text-white disabled:opacity-75"
         >
           Send Request
-          <svg xmlns="http://www.w3.org/2000/svg" class="size-2.5" fill="none">
-            <path
-              fill="currentColor"
-              d="M.833 4.17h6.325l-2.75-2.742A.837.837 0 1 1 5.592.245l4.166 4.167c.076.079.136.172.175.275a.833.833 0 0 1 0 .633.833.833 0 0 1-.175.275L5.592 9.762a.833.833 0 0 1-1.184 0 .833.833 0 0 1 0-1.184l2.75-2.741H.833a.833.833 0 1 1 0-1.667Z"
-            />
-          </svg>
         </button>
       </form>
     </main>

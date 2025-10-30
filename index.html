@@ -22,20 +22,42 @@
         data-aos="fade-left"
         data-aos-duration="400"
       >
-        <button :aria-expanded="isOpen" aria-controls="mobile-nav" class="size-12 text-black">
+        <button
+          :aria-expanded="isOpen"
+          aria-controls="mobile-nav"
+          class="z-20 size-12 rounded-full text-white"
+        >
           <img src="./assets/shared/burger-menu-svgrepo-com.svg" alt="" x-show="!isOpen" />
           <img src="./assets/shared/close-svgrepo-com.svg" alt="" x-show="isOpen" />
         </button>
 
         <div
+          x-show="isOpen"
+          @click="isOpen = false"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          class="from-brand/40 to-lighter-brand/40 fixed inset-0 z-10 bg-linear-180 backdrop-blur-sm"
+        ></div>
+
+        <div
           role="navigation"
           x-show="isOpen"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 scale-90"
+          x-transition:enter-end="opacity-100 scale-100"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100 scale-100"
+          x-transition:leave-end="opacity-0 scale-90"
           id="mobile-nav"
-          class="fixed left-1/2 flex w-2/3 -translate-x-1/2 translate-y-2/5 flex-col items-center gap-8 bg-white px-15 py-10"
+          class="fixed left-1/2 z-20 flex w-2/3 -translate-x-1/2 translate-y-2/5 flex-col items-center gap-8 bg-white px-15 py-10"
         >
           <a
             x-init="$nextTick();"
-            x-bind:class="$store.navigation.isCurrent('index.html') && 'text-brand'"
+            :class="{ 'text-brand': $store.navigation.isCurrent('index.html') }"
             href="./index.html#blog"
           >
             Home
@@ -43,21 +65,21 @@
           <a
             href="#about"
             x-init="$nextTick();"
-            x-bind:class="$store.navigation.isCurrent('index.html#about') && 'text-brand'"
+            :class="{ 'text-brand': $store.navigation.isCurrent('index.html#about') }"
           >
             About Us
           </a>
           <a
             href="./index.html#blog"
             x-init="$nextTick();"
-            x-bind:class="$store.navigation.isCurrent('index.html#blog') && 'text-brand'"
+            :class="{ 'text-brand': $store.navigation.isCurrent('index.html#blog') }"
           >
             Blog
           </a>
           <a
             href="./services.html"
             x-init="$nextTick();"
-            x-bind:class="$store.navigation.isCurrent('services.html') && 'text-brand'"
+            :class="{ 'text-brand': $store.navigation.isCurrent('services.html') }"
           >
             Services
           </a>
@@ -84,7 +106,7 @@
       >
         <a
           x-init="$nextTick();"
-          x-bind:class="$store.navigation.isCurrent('index.html') && 'text-brand'"
+          :class="{ 'text-brand': $store.navigation.isCurrent('index.html') }"
           href="./index.html"
         >
           Home
@@ -92,21 +114,21 @@
         <a
           href="#about"
           x-init="$nextTick();"
-          x-bind:class="$store.navigation.isCurrent('index.html#about') && 'text-brand'"
+          :class="{ 'text-brand': $store.navigation.isCurrent('index.html#about') }"
         >
           About Us
         </a>
         <a
           href="./index.html#blog"
           x-init="$nextTick();"
-          x-bind:class="$store.navigation.isCurrent('index.html#blog') && 'text-brand'"
+          :class="{ 'text-brand': $store.navigation.isCurrent('index.html#blog') }"
         >
           Blog
         </a>
         <a
           href="./services.html"
           x-init="$nextTick();"
-          x-bind:class="$store.navigation.isCurrent('services.html') && 'text-brand'"
+          :class="{ 'text-brand': $store.navigation.isCurrent('services.html') }"
         >
           Services
         </a>
@@ -158,7 +180,7 @@
             data-aos-easing="ease-out-back"
             data-aos-delay="500"
             data-aos-duration="800"
-            href="./services.html"
+            href=".#about"
             class="hocus:text-brand hocus:scale-105 hocus:shadow-2xs flex gap-4 transition-all"
           >
             <svg width="21" height="21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +190,7 @@
               />
             </svg>
 
-            <span class="text-12">Watch our reel</span>
+            <span class="text-12">Learn more</span>
           </a>
         </div>
       </header>
@@ -202,7 +224,6 @@
             <template x-for="i in 3">
               <div
                 class="animate-right-to-left relative flex w-fit flex-nowrap gap-5"
-                id="container"
                 x-init="$nextTick(() => {})"
               >
                 <template x-for="(icon, index) in firstHalf" :key="index">
@@ -226,10 +247,9 @@
             <template x-for="i in 3">
               <div
                 class="animate-left-to-right flex w-fit translate-x-full flex-nowrap gap-5"
-                id="container"
                 x-init="$nextTick(() => {})"
               >
-                <template x-for="(icon, index) in firstHalf" :key="index">
+                <template x-for="(icon, index) in secondHalf" :key="index">
                   <img
                     class="border-grey inline min-w-50 rounded-xl border px-6 py-4"
                     :src="icon['path']"
@@ -265,12 +285,12 @@
             data-aos-once="true"
             data-aos-anchor-placement="center-bottom"
             tabindex="0"
-            class="hocus:scale-105 hocus:shadow-xl hocus:translate-y-4 relative flex flex-col items-center p-px transition-[scale_trasslate-y] md:items-start"
+            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 relative flex flex-col items-center p-px transition-all md:items-start"
             aria-labelledby="strategy-services"
           >
             <img
               src="./assets/homepage/our-services/strategy-services.svg"
-              alt="strategy-services icon"
+              alt="Strategy planning icon with target and arrows"
             />
             <div class="mt-8">
               <h3 id="strategy-services" class="text-32 text-brand font-medium">
@@ -278,8 +298,9 @@
               </h3>
               <footer class="mt-8 space-y-4">
                 <p class="text-18 max-w-[30ch]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lobortis luctus
-                  lacus. Nunc porta ipsum et tempor euismod.
+                  We craft data-driven brand strategies that position your business for long-term
+                  success. From market research to competitive analysis, we build the foundation for
+                  meaningful growth.
                 </p>
                 <a
                   href="./services.html"
@@ -298,12 +319,12 @@
             data-aos-once="true"
             data-aos-anchor-placement="center-bottom"
             tabindex="0"
-            class="hocus:scale-105 hocus:shadow-xl hocus:translate-y-4 relative flex flex-col items-center p-px transition-[scale_trasslate-y] md:items-start"
+            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 relative flex flex-col items-center p-px transition-all md:items-start"
             aria-labelledby="marketing-services"
           >
             <img
               src="./assets/homepage/our-services/marketing-services.svg"
-              alt="strategy-services icon"
+              alt="Marketing megaphone icon"
             />
             <div class="mt-8">
               <h3 id="marketing-services" class="text-32 text-brand font-medium">
@@ -311,8 +332,9 @@
               </h3>
               <footer class="mt-8 space-y-4">
                 <p class="text-18 max-w-[30ch]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lobortis luctus
-                  lacus. Nunc porta ipsum et tempor euismod.
+                  Amplify your brand's voice across all channels. Our integrated marketing campaigns
+                  combine SEO, social media, and content marketing to drive engagement and
+                  conversions.
                 </p>
                 <a
                   href="./services.html"
@@ -331,19 +353,20 @@
             data-aos-once="true"
             data-aos-anchor-placement="center-bottom"
             tabindex="0"
-            class="hocus:scale-105 hocus:shadow-xl hocus:translate-y-4 relative flex flex-col items-center p-px transition-[scale_trasslate-y] md:items-start"
+            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 relative flex flex-col items-center p-px transition-all md:items-start"
             aria-labelledby="design-services"
           >
             <img
               src="./assets/homepage/our-services/design-services.svg"
-              alt="strategy-services icon"
+              alt="Design palette and tools icon"
             />
             <div class="mt-8">
               <h3 id="design-services" class="text-32 text-brand font-medium">Design services</h3>
               <footer class="mt-8 space-y-4">
                 <p class="text-18 max-w-[30ch]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lobortis luctus
-                  lacus. Nunc porta ipsum et tempor euismod.
+                  Transform your vision into stunning visual experiences. We create brand
+                  identities, UI/UX designs, and creative assets that captivate audiences and
+                  elevate your market presence."
                 </p>
                 <a
                   href="./services.html"
@@ -362,12 +385,12 @@
             data-aos-once="true"
             data-aos-anchor-placement="center-bottom"
             tabindex="0"
-            class="hocus:scale-105 hocus:shadow-xl hocus:translate-y-4 relative flex flex-col items-center p-px transition-[scale_trasslate-y] md:items-start"
+            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 relative flex flex-col items-center p-px transition-all md:items-start"
             aria-labelledby="development-services"
           >
             <img
-              src="./assets/homepage/our-services/design-services.svg"
-              alt="strategy-services icon"
+              src="./assets/homepage/our-services/development-services.svg"
+              alt="Development code brackets icon"
             />
             <div class="mt-8">
               <h3 id="development-services" class="text-32 text-brand font-medium">
@@ -375,7 +398,9 @@
               </h3>
               <footer class="mt-8 space-y-4">
                 <p class="text-18 max-w-[30ch]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Build powerful digital products that scale. Our expert developers craft responsive
+                  websites, web applications, and e-commerce platforms using cutting-edge
+                  technologies.
                 </p>
                 <a
                   href="./services.html"
@@ -430,9 +455,13 @@
             data-aos-duration="800"
             data-aos-once="true"
             tabindex="0"
-            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 hocus:bg-black/30 relative space-y-8 transition-[scale_trasslate-y] duration-300"
+            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 hocus:bg-black/30 relative space-y-8 transition-all duration-300"
           >
-            <img src="./assets/homepage/previous-works/blvck.png" loading="lazy" alt="BLCK image" />
+            <img
+              src="./assets/homepage/previous-works/blvck.png"
+              loading="lazy"
+              alt="BLVCK branding project showcase"
+            />
             <figcaption class="flex items-center justify-between transition-colors duration-300">
               <h3 class="text-32 font-semibold">BLVCK</h3>
               <p class="text-18 text-lighter-brand font-semibold">Branding</p>
@@ -445,12 +474,12 @@
             data-aos-duration="800"
             data-aos-once="true"
             tabindex="0"
-            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 hocus:bg-black/30 relative space-y-8 transition-[scale_trasslate-y] duration-300"
+            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 hocus:bg-black/30 relative space-y-8 transition-all duration-300"
           >
             <img
               src="./assets/homepage/previous-works/cream.png"
               loading="lazy"
-              alt="CREAM image"
+              alt="CREAM branding project showcase"
             />
             <figcaption class="flex items-center justify-between transition-colors duration-300">
               <h3 class="text-32 font-semibold">CREAM</h3>
@@ -464,12 +493,12 @@
             data-aos-duration="800"
             data-aos-once="true"
             tabindex="0"
-            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 hocus:bg-black/30 relative space-y-8 transition-[scale_trasslate-y] duration-300"
+            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 hocus:bg-black/30 relative space-y-8 transition-all duration-300"
           >
             <img
               src="./assets/homepage/previous-works/fredi.png"
               loading="lazy"
-              alt="FREDI image"
+              alt="FREDI branding project showcase"
             />
             <figcaption class="flex items-center justify-between transition-colors duration-300">
               <h3 class="text-32 font-semibold">FREDI</h3>
@@ -483,12 +512,12 @@
             data-aos-duration="800"
             data-aos-once="true"
             tabindex="0"
-            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 hocus:bg-black/30 relative space-y-8 transition-[scale_trasslate-y] duration-300"
+            class="hocus:scale-105 hocus:shadow-xl hocus:-translate-y-4 hocus:bg-black/30 relative space-y-8 transition-all duration-300"
           >
             <img
               src="./assets/homepage/previous-works/apollo.png"
               loading="lazy"
-              alt="APOLLO image"
+              alt="APOLLO branding project showcase"
             />
             <figcaption class="flex items-center justify-between transition-colors duration-300">
               <h3 class="text-32 font-semibold">APOLLO</h3>
@@ -566,7 +595,10 @@
             class="hocus:scale-103 hocus:shadow-2xs outline-brand transition-[scale_box-shadow]"
             aria-labelledby="discuss-bid"
           >
-            <img src="./assets/homepage/blog/twitter-board.png" alt="" />
+            <img
+              src="./assets/homepage/blog/twitter-board.png"
+              alt="Twitter company boardroom meeting"
+            />
             <header class="text-brand text-18 mt-12.5 space-x-6.5 font-medium">
               <span class="vertical-after">Business</span>
               <time datetime="2022-04-25">April 25, 2022</time>
@@ -585,7 +617,10 @@
             class="hocus:scale-103 hocus:shadow-2xs outline-brand transition-[scale_box-shadow]"
             aria-labelledby="actors-launch"
           >
-            <img src="./assets/homepage/blog/actors-launch.png" alt="" />
+            <img
+              src="./assets/homepage/blog/actors-launch.png"
+              alt="Actors campaign against AI technology"
+            />
             <header class="text-brand text-18 mt-12.5 space-x-6.5 font-medium">
               <span class="vertical-after">Technology</span>
               <time datetime="2022-06-10">June 10, 2022</time>
@@ -604,7 +639,7 @@
             class="hocus:scale-103 hocus:shadow-2xs outline-brand transition-[scale_box-shadow]"
             aria-labelledby="oneWeb"
           >
-            <img src="./assets/homepage/blog/one-web.png" alt="" />
+            <img src="./assets/homepage/blog/one-web.png" alt="OneWeb satellite launch" />
             <header class="text-brand text-18 mt-12.5 space-x-6.5 font-medium">
               <span class="vertical-after">Science</span>
               <time datetime="2022-05-10">May 10, 2022</time>

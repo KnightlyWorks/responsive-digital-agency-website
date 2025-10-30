@@ -2,13 +2,11 @@ import { watch } from 'fs';
 import { copyFileSync, readdirSync, mkdirSync, statSync } from 'fs';
 import { join } from 'path';
 
-// При запуске скрипта - сразу копируем всё
 console.log('📋 Copying HTML, assets and data...\n');
 copyHtmlFiles();
 copyAssets();
 copyData();
 
-// Теперь следим за изменениями HTML
 console.log('👀 Watching HTML files for changes...\n');
 
 watch('.', { recursive: false }, (eventType, filename) => {
@@ -18,7 +16,6 @@ watch('.', { recursive: false }, (eventType, filename) => {
     }
 });
 
-// Следим за изменениями в data/
 try {
     if (statSync('data', { throwIfNoEntry: false })) {
         watch('data', { recursive: true }, (eventType, filename) => {
@@ -29,12 +26,9 @@ try {
         });
     }
 } catch (err) {
-    // Нет папки data
+
 }
 
-// ============================================
-// Копирует все .html из корня в dist/
-// ============================================
 function copyHtmlFiles() {
     mkdirSync('dist', { recursive: true });
 
@@ -46,9 +40,7 @@ function copyHtmlFiles() {
     });
 }
 
-// ============================================
-// Копирует папку assets в dist/assets
-// ============================================
+
 function copyAssets() {
     try {
         if (statSync('assets', { throwIfNoEntry: false })) {
@@ -56,13 +48,11 @@ function copyAssets() {
             console.log('📁 Copied assets/ → dist/assets/\n');
         }
     } catch (err) {
-        // Нет папки assets - ничего страшного
+
     }
 }
 
-// ============================================
-// Копирует папку data в dist/data
-// ============================================
+
 function copyData() {
     try {
         if (statSync('data', { throwIfNoEntry: false })) {
@@ -70,7 +60,7 @@ function copyData() {
             console.log('📊 Copied data/ → dist/data/\n');
         }
     } catch (err) {
-        // Нет папки data - ничего страшного
+
     }
 }
 

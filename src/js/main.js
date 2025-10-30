@@ -3,8 +3,6 @@ import * as AlpineComponents from "./components/alpine-components.js";
 import AOS from "aos";
 
 document.addEventListener("alpine:init", () => {
-  console.log("Alpine initialized");
-
   Alpine.store("navigation", {
     currentPage: window.location.pathname.split("/").pop() || "index.html",
     isCurrent(page) {
@@ -13,12 +11,13 @@ document.addEventListener("alpine:init", () => {
   });
 
   Alpine.data("form", AlpineComponents.form);
-  console.log("🏔️ Alpine.js initialized!");
 });
 
 window.Alpine = Alpine;
 Alpine.start();
+
 AOS.init({
+  disable: "mobile",
   offset: 0,
   duration: 500,
   easing: "ease-in-out",
@@ -26,5 +25,3 @@ AOS.init({
   mirror: false,
   anchorPlacement: "top-bottom",
 });
-
-console.log("App ready");
