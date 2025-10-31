@@ -57,22 +57,16 @@
           <a
             x-init="$nextTick();"
             :class="{ 'text-brand': $store.navigation.isCurrent('index.html') }"
-            href="./index.html#blog"
+            href="./index.html"
           >
             Home
           </a>
-          <a
-            href="#about"
-            x-init="$nextTick();"
-            :class="{ 'text-brand': $store.navigation.isCurrent('index.html#about') }"
-          >
+          <a href="index.html#about">
+            <!--:class removed because 0 sense of UX and buggy-->
             About Us
           </a>
-          <a
-            href="./index.html#blog"
-            x-init="$nextTick();"
-            :class="{ 'text-brand': $store.navigation.isCurrent('index.html#blog') }"
-          >
+          <a href="./index.html#blog">
+            <!--:class removed because 0 sense of UX and buggy-->
             Blog
           </a>
           <a
@@ -110,18 +104,12 @@
         >
           Home
         </a>
-        <a
-          href="#about"
-          x-init="$nextTick();"
-          :class="{ 'text-brand': $store.navigation.isCurrent('index.html#about') }"
-        >
+        <a href="./index.html#about">
+          <!--:class removed because 0 sense of UX and buggy-->
           About Us
         </a>
-        <a
-          href="./index.html#blog"
-          x-init="$nextTick();"
-          :class="{ 'text-brand': $store.navigation.isCurrent('index.html#blog') }"
-        >
+        <a href="./index.html#blog">
+          <!--:class removed because 0 sense of UX and buggy-->
           Blog
         </a>
         <a
@@ -146,7 +134,6 @@
         </svg>
       </a>
     </header>
-
     <main class="space-y-30 *:px-[11%] md:space-y-25 2xl:space-y-40">
       <header class="bg-lighter-brand mb-30 py-20 text-left text-balance">
         <p
