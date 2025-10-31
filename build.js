@@ -11,7 +11,7 @@ const jsConfig = {
   outfile: 'dist/js/bundle.js',
   format: 'esm',
     sourcemap: isDev,
-    minify: !isDev,
+    minify: false,
     target: ['es2020'],
 };
 
